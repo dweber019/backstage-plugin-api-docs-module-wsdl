@@ -3,7 +3,7 @@
  *
  * @packageDocumentation
  */
-export { apiDocsModuleWsdlDocApiRef, ApiDocsModuleWsdlDocClient } from './api';
-export type { ApiDocsModuleWsdlDocApi, ClientOptions } from './api';
-export { wsdlDocsApiWidget } from './widgets';
+export { apiDocsModuleWsdlApiRef, ApiDocsModuleWsdlClient } from './api';
+export type { ApiDocsModuleWsdlApi, ClientOptions } from './api';
+export { wsdlApiWidget } from './widgets';
 export { apiDocsModuleWsdlDocPlugin } from './plugin';

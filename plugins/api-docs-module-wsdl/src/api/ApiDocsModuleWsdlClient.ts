@@ -1,5 +1,5 @@
 import { ResponseError } from '@backstage/errors';
-import { ApiDocsModuleWsdlDocApi } from './types';
+import { ApiDocsModuleWsdlApi } from './types';
 import { DiscoveryApi, IdentityApi } from '@backstage/core-plugin-api';
 
 /**
@@ -17,7 +17,7 @@ export interface ClientOptions {
  *
  * @public
  */
-export class ApiDocsModuleWsdlDocClient implements ApiDocsModuleWsdlDocApi {
+export class ApiDocsModuleWsdlClient implements ApiDocsModuleWsdlApi {
   private readonly discoveryApi: DiscoveryApi;
   private readonly identityApi: IdentityApi;
 

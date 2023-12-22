@@ -5,7 +5,7 @@ import { createApiRef } from '@backstage/core-plugin-api';
  *
  * @public
  */
-export interface ApiDocsModuleWsdlDocApi {
+export interface ApiDocsModuleWsdlApi {
   /**
    * Convert WSDL to HTML.
    *
@@ -19,8 +19,6 @@ export interface ApiDocsModuleWsdlDocApi {
  *
  * @public
  */
-export const apiDocsModuleWsdlDocApiRef = createApiRef<ApiDocsModuleWsdlDocApi>(
-  {
-    id: 'plugin.api-docs-module-wsdl.api',
-  },
-);
+export const apiDocsModuleWsdlApiRef = createApiRef<ApiDocsModuleWsdlApi>({
+  id: 'plugin.api-docs-module-wsdl.api',
+});

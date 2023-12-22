@@ -1,4 +1,4 @@
-import { apiDocsModuleWsdlDocApiRef, ApiDocsModuleWsdlDocClient } from './api';
+import { apiDocsModuleWsdlApiRef, ApiDocsModuleWsdlClient } from './api';
 import {
   createApiFactory,
   createPlugin,
@@ -15,13 +15,13 @@ export const apiDocsModuleWsdlDocPlugin = createPlugin({
   id: 'api-docs-module-wsdl',
   apis: [
     createApiFactory({
-      api: apiDocsModuleWsdlDocApiRef,
+      api: apiDocsModuleWsdlApiRef,
       deps: {
         identityApi: identityApiRef,
         discoveryApi: discoveryApiRef,
       },
       factory({ identityApi, discoveryApi }) {
-        return new ApiDocsModuleWsdlDocClient({ identityApi, discoveryApi });
+        return new ApiDocsModuleWsdlClient({ identityApi, discoveryApi });
       },
     }),
   ],

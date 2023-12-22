@@ -14,20 +14,20 @@ Add the widget to your `apiDocsConfigRef`.
 // packages/app/apis.ts
 
 import {
-  apiDocsModuleWsdlDocApiRef,
-  ApiDocsModuleWsdlDocClient,
-  wsdlDocsApiWidget,
-} from '@backstage/plugin-api-docs-module-wsdl-doc';
+  apiDocsModuleWsdlApiRef,
+  ApiDocsModuleWsdlClient,
+  wsdlApiWidget,
+} from '@dweber019/backstage-plugin-api-docs-module-wsdl';
 
 export const apis: AnyApiFactory[] = [
   createApiFactory({
-    api: apiDocsModuleWsdlDocApiRef,
+    api: apiDocsModuleWsdlApiRef,
     deps: {
       identityApi: identityApiRef,
       discoveryApi: discoveryApiRef,
     },
     factory: ({ identityApi, discoveryApi }) =>
-      new ApiDocsModuleWsdlDocClient({ identityApi, discoveryApi }),
+      new ApiDocsModuleWsdlClient({ identityApi, discoveryApi }),
   }),
   createApiFactory({
     api: apiDocsConfigRef,
@@ -36,7 +36,7 @@ export const apis: AnyApiFactory[] = [
       // load the default widgets
       const definitionWidgets = defaultDefinitionWidgets();
       // add the wsdl-docs api widget to the definition widgets
-      definitionWidgets.push(wsdlDocsApiWidget);
+      definitionWidgets.push(wsdlApiWidget);
       return {
         getApiDefinitionWidget: (apiEntity: ApiEntity) => {
           // find the widget for the type of api entity

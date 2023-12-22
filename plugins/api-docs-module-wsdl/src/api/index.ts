@@ -1,4 +1,4 @@
-export { ApiDocsModuleWsdlDocClient } from './ApiDocsModuleWsdlDocClient';
-export type { ClientOptions } from './ApiDocsModuleWsdlDocClient';
-export { apiDocsModuleWsdlDocApiRef } from './types';
-export type { ApiDocsModuleWsdlDocApi } from './types';
+export { ApiDocsModuleWsdlClient } from './ApiDocsModuleWsdlClient';
+export type { ClientOptions } from './ApiDocsModuleWsdlClient';
+export { apiDocsModuleWsdlApiRef } from './types';
+export type { ApiDocsModuleWsdlApi } from './types';

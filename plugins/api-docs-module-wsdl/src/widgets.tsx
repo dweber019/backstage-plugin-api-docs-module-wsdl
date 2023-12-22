@@ -4,7 +4,7 @@ import { WsdlDefinitionWidget } from './components/WsdlDefinitionWidget';
 /**
  * @public
  */
-export const wsdlDocsApiWidget = {
+export const wsdlApiWidget = {
   type: 'wsdl',
   title: 'WSDL',
   component: (definition: string) => (

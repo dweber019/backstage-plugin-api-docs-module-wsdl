@@ -10,9 +10,9 @@ import {
 } from '@backstage/plugin-api-docs';
 import {
   apiDocsModuleWsdlDocPlugin,
-  apiDocsModuleWsdlDocApiRef,
-  ApiDocsModuleWsdlDocClient,
-  wsdlDocsApiWidget,
+  apiDocsModuleWsdlApiRef,
+  ApiDocsModuleWsdlClient,
+  wsdlApiWidget,
 } from '../src';
 import {
   BackstageUserIdentity,
@@ -56,7 +56,7 @@ createDevApp()
     deps: {},
     factory: () => {
       const definitionWidgets = defaultDefinitionWidgets();
-      definitionWidgets.push(wsdlDocsApiWidget);
+      definitionWidgets.push(wsdlApiWidget);
       return {
         getApiDefinitionWidget: (apiEntity: ApiEntity) => {
           return definitionWidgets.find(d => d.type === apiEntity.spec.type);
@@ -66,10 +66,10 @@ createDevApp()
   })
   .registerPlugin(apiDocsModuleWsdlDocPlugin)
   .registerApi({
-    api: apiDocsModuleWsdlDocApiRef,
+    api: apiDocsModuleWsdlApiRef,
     deps: {},
     factory: () =>
-      new ApiDocsModuleWsdlDocClient({
+      new ApiDocsModuleWsdlClient({
         discoveryApi: localDiscoveryApi,
         identityApi: localIdentityApi,
       }),
