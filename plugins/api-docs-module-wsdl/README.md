@@ -1,5 +1,8 @@
 # @dweber019/backstage-plugin-api-docs-module-wsdl
 
+Frontend for the `@dweber019/backstage-plugin-api-docs-module-wsdl-backend` backend plugin.  
+You need to install the backend plugin too.
+
 ## Setup
 
 ```
