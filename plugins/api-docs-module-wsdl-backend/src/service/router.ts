@@ -34,9 +34,11 @@ const removePort = (uri: string) => {
   return url.toString();
 };
 
-const wsdlToHtml = async (xml: string, logger: Logger) => {
-  const saxonDocument = await SaxonJS.getResource({ text: xml, type: 'xml' });
-
+const recursiveDocumentPoolDownload = async (
+  saxonDocument: any,
+  logger: Logger,
+  documentPool: { [name: string]: string } = {},
+) => {
   const schemaURIs: Array<{ value: string }> =
     SaxonJS.XPath.evaluate(
       "//*[local-name() = 'import'][@location]/@location|//*[@schemaLocation]/@schemaLocation",
@@ -45,30 +47,42 @@ const wsdlToHtml = async (xml: string, logger: Logger) => {
     ) || [];
 
   if (schemaURIs.length > 0) {
+    const externalSchemas = await Promise.all(
+      schemaURIs.map(async schemaURI =>
+        SaxonJS.getResource({
+          text: await downloadExternalSchema(schemaURI.value, logger),
+          type: 'xml',
+        }),
+      ),
+    );
+
+    for (let i = 0; i < externalSchemas.length; i++) {
+      documentPool[removePort(schemaURIs[i].value)] = externalSchemas[i];
+    }
+
+    await Promise.all(
+      externalSchemas.map(async document =>
+        recursiveDocumentPoolDownload(document, logger, documentPool),
+      ),
+    );
+  }
+
+  return documentPool;
+};
+
+const wsdlToHtml = async (xml: string, logger: Logger) => {
+  const saxonDocument = await SaxonJS.getResource({ text: xml, type: 'xml' });
+  const documentPool: { [name: string]: string } =
+    await recursiveDocumentPoolDownload(saxonDocument, logger);
+
+  const schemaURIs = Object.keys(documentPool);
+  if (schemaURIs.length > 0) {
     logger.info(
       `Downloading external schemas as found ${schemaURIs.length} external schemas.`,
     );
-    logger.info(
-      `External schemas ${schemaURIs
-        .map(schemaURI => schemaURI.value)
-        .join(', ')}`,
-    );
+    logger.info(`External schemas ${schemaURIs.join(', ')}`);
   } else {
     logger.info('No external schema found');
-  }
-
-  const externalSchemas = await Promise.all(
-    schemaURIs.map(async schemaURI =>
-      SaxonJS.getResource({
-        text: await downloadExternalSchema(schemaURI.value, logger),
-        type: 'xml',
-      }),
-    ),
-  );
-
-  const documentPool: { [name: string]: string } = {};
-  for (let i = 0; i < externalSchemas.length; i++) {
-    documentPool[removePort(schemaURIs[i].value)] = externalSchemas[i];
   }
 
   logger.info('Transforming wsdl document');
